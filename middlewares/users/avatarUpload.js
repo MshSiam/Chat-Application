@@ -1,4 +1,4 @@
-const uploader = require("../../middleweres/users/avatarUpolad")
+const uploader = require("../../utilities/singleUploader");
 
 function avatarUpload(req, res, next) {
   const upload = uploader(
@@ -6,7 +6,7 @@ function avatarUpload(req, res, next) {
     ["image/jpeg", "image/jpg", "image/png"],
     1000000,
     "Only .jpg, jpeg or .png format allowed!"
-  )
+  );
 
   // call the middleware function
   upload.any()(req, res, (err) => {
@@ -14,14 +14,14 @@ function avatarUpload(req, res, next) {
       res.status(500).json({
         errors: {
           avatar: {
-            msg: err.message
-          }
-        }
-      })
+            msg: err.message,
+          },
+        },
+      });
     } else {
-      next()
+      next();
     }
-  })
+  });
 }
 
-module.exports = avatarUpload
+module.exports = avatarUpload;
